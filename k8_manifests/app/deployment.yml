@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: suryanshverma/my-app
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              key: PORT
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_URI
