@@ -57,7 +57,14 @@ pipeline{
         stage("pushing to github"){
             steps{
                 script{
-                    
+                    sh "pushing to github..."
+                    withCredentials([gitUsernamePassword(credentialsId:'github',gitToolName:'Default')]){
+                        sh "git add ."
+                        sh "git commit -m \"updated k8s-deployment image tag\""
+                        sh "git push origin main"
+                        sh "pushing to github successfully."
+                    }
+                    sh "deployment done."
                 }
             }
         }
